@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+//"syscall"
 	"log"
 	"os"
 	"os/exec"
@@ -21,20 +22,27 @@ func terminalSize() (width, height int) {
 }
 
 func showMenu() {
-	for i := 0; i < 100000; i++ {
-		fmt.Printf("At %v\n", i)
+	cmd := exec.Command("echo","Thalia Constitutieborrel Gastenboek\n Optie 1 1: Optie 2 2:")
+	err := cmd.Run()
+	if(err != nil){
+		fmt.Printf("There has been an error: %s ",err)
 	}
-	fmt.Printf("Done!")
-	os.Exit(0)
 }
 
-func main() {
-	go showMenu()
 
+func signalCatcher(){
 	c := make(chan os.Signal)
 	signal.Notify(c)
 	for sig := range c {
-		fmt.Println(sig.String())
+		fmt.Printf("Signal received: %v",sig)
 	}
-	return
+}
+
+func main() {
+	go signalCatcher()
+	go showMenu()
+	for i:=0;i<200000;i+=1{
+		fmt.Println(i)
+	}
+return
 }
