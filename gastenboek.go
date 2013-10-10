@@ -1,4 +1,4 @@
-package gastenboek
+package main
 
 import (
 	"fmt"
