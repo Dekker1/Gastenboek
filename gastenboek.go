@@ -16,6 +16,5 @@ func signalCatcher() {
 
 func main() {
 	go signalCatcher()
-	go showMenu()
-	return
+	showMenu()
 }
