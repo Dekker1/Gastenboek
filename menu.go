@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -15,9 +15,11 @@ const (
 func terminalSize() (width, height int) {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
-	out, err := cmd.Output()
+	out, _ := cmd.Output()
 	sizes := strings.Split(string(out), " ")
-	return sizes[1], sizes[0]
+	width, _ = strconv.Atoi(sizes[1])
+	height, _ = strconv.Atoi(sizes[0])
+	return width, height
 }
 
 func showMenu() {
