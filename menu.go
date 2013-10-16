@@ -16,9 +16,10 @@ func terminalSize() (width, height int) {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
 	out, _ := cmd.Output()
-	sizes := strings.Split(string(out), " ")
-	width, _ = strconv.Atoi(sizes[1])
-	height, _ = strconv.Atoi(sizes[0])
+	sizes := strings.Trim(string(out), "\n")
+	size := strings.Split(sizes, " ")
+	width, _ = strconv.Atoi(size[1])
+	height, _ = strconv.Atoi(size[0])
 	return width, height
 }
 
