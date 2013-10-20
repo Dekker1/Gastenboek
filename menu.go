@@ -42,9 +42,12 @@ func generateMenu() string {
 		menuwidth = width
 		var content []string = strings.Split(ascii, "\n")
 		var options []string = strings.Split(tekst, "\n")
-		content = append(content, make([]string, (height-4)-len(content)-len(options))...)
+
+		content = append(content, make([]string, ((height-4)-len(content)-len(options))/2)...)
 		content = append(content, options...)
-		menu += strings.Repeat("-", width)
+		content = append(content, make([]string, ((height-4)-len(content)-len(options))/2)...)
+		menu += strings.Repeat("-", width-1) + "\n"
+
 		for _, value := range content {
 			var length int = len(value)
 			menu += "|"
@@ -53,22 +56,33 @@ func generateMenu() string {
 			menu += strings.Repeat(" ", int(math.Ceil(float64((width-length-2)/2.0))))
 			menu += "|\n"
 		}
-		menu += strings.Repeat("-", width)
+
+		menu += strings.Repeat("-", width-1) + "\n"
 	}
 	return menu
 }
 
 func showMenu() {
-	clear()
-	fmt.Print(generateMenu())
-	if Message != "" {
+	for {
+		clear()
+		fmt.Print(generateMenu())
 		fmt.Println(Message)
-	} else {
-		fmt.Print("\n")
-	}
-	fmt.Print("Maak uw keuze: ")
-	var i int
-	fmt.Scanf("%d", &i)
-	fmt.Println(i)
 
+		fmt.Print("Maak uw keuze: ")
+		var i int
+		fmt.Scan(&i)
+
+		switch i {
+		default:
+			Message = "Was dat een keuze? Ik dacht van niet, probeer maar opnieuw!"
+		case 1:
+			if makeEntry() {
+				Message = ""
+			}
+		case 2:
+			Message = "Not yet implemented"
+		case 88888888:
+			os.Exit(0)
+		}
+	}
 }
