@@ -101,6 +101,10 @@ func makeEntry() bool {
 	} else if len(name) > maxName {
 		name = name[:maxName-1]
 	}
+	name = strings.TrimSpace(name)
+	if name == "" {
+		name = "Anonymous"
+	}
 
 	fmt.Printf("\n\nSchrijf hieronder uw bericht aan het nieuwe bestuur van Thalia.\nU kunt alle tekens binnen de unicode gebruiken, u kunt maximaal %d bytes gebruiken.\nU Schrijft per regel, dus nadat een regel getypt is, is deze definitief.\nSluit uw bericht af met een regel \"Aldus ons bericht.\", u kunt het bericht daarna nog persoonlijk ondertekenen.\n", maxContent)
 	var width, _ int = terminalSize()

@@ -41,7 +41,7 @@ func generateMenu() string {
 	var width, height int = terminalSize()
 	if menu == "" && width != menuwidth {
 		menuwidth = width
-		if width-3 < asciiLen {
+		if width >= asciiLen+4 {
 			var content []string = strings.Split(ascii, "\n")
 			var options []string = strings.Split(tekst, "\n")
 
