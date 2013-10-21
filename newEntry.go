@@ -117,7 +117,7 @@ func makeEntry() bool {
 		return false
 	}
 
-	ok = writeToFile(strconv.FormatInt(time.Now().Unix(), 10)+" "+name, content+"\n\n"+sign)
+	ok = writeToFile(strconv.FormatInt(time.Now().Unix(), 10)+" "+name+".txt", content+"\n\n"+sign)
 
 	reader.ReadString('\n')
 
