@@ -88,7 +88,8 @@ func showMenu() {
 			}
 		case 2:
 			viewEntry()
-		case 88888888:
+		case 14101992:
+			clear()
 			os.Exit(0)
 		}
 	}
