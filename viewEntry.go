@@ -18,6 +18,7 @@ var (
 	entries []string
 )
 
+// Get the information from entries and format it.
 func listFilenames() {
 	for i, val := range entries {
 		val = strings.Trim(val, ".txt")
@@ -29,6 +30,7 @@ func listFilenames() {
 	}
 }
 
+// Adds a file to entries if it's an actual file
 func getFilenames(path string, info os.FileInfo, err error) error {
 	if !info.IsDir() && info.Name() == path && filepath.Ext(path) == ".txt" {
 		entries = append(entries, path)
@@ -36,6 +38,7 @@ func getFilenames(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
+// A function that works like "less"
 func showFile(i int) {
 	f, openErr := os.Open(entries[i])
 	if openErr != nil {
@@ -52,7 +55,7 @@ func showFile(i int) {
 	fmt.Print(strings.Repeat("-", width-1) + "\n")
 
 	var lines int
-	var done bool = false
+	var done = false
 	for !done {
 		line, err := reader.ReadString('\n')
 		done = err != nil
@@ -66,6 +69,7 @@ func showFile(i int) {
 	user.ReadString('\n')
 }
 
+// The coordinating function to show the different entries.
 func viewEntry() {
 	entries = make([]string, 0)
 	err := filepath.Walk(".", filepath.WalkFunc(getFilenames))

@@ -10,17 +10,22 @@ import (
 )
 
 const (
-	ascii    string = "                                       `sMMMMMMMh:\n.-------..-------- -----------------.`sMMMMMMMd:  \n`sNMMMMMhyMMMMMMMM/hdMMMMMMMMMMMMMMhhMMMMMMMd:    \n  `sNMMMhyMMMMMMMM+MNhhMMMMMMMMMMhhMMMMMMMd:      \n    `sNMhyMMMMMMMM+MMMNhhMMMMMMy-+ooooooo:        \n      `ohyMMMMMMMM+MMMMMNhhMMs.                   \n         `........:MMMMMMMNy-                     \n                  :MMMMMMMMMNo`                   \n                  :MMMMMMMMMMMN:                  \n                  :MMMMMMMMMMd:                   \n                  :MMMMMMMMd:                     \n                  :MMMMMMd:                       \n                  :MMMMdhy                        \n                  :MMdhNMd                        \n                  :dhNMMMd                        \n                 `oNMMMMMd                        \n               `+NMMMMMMMd                        \n             `+NMMMMMMMMMd                        \n            `dMMMMMMMMMMMd                        \n              /mMMMMMMMMMd                        \n                /mMMMMMMMd.                       \n                  /mMMMMMdyd:                     \n                    /mMMMhyMMd:                   \n                      /mMhyMMMMd:                 \n                        /syMMMMMMd/               "
-	asciiLen int    = 50
-	tekst    string = "Thalia Constitutieborrel Gastenboek\n1) Schrijf een nieuw bericht.\n2) Lees oude berichten."
+	// ASCII Art of the Thalia Logo
+	ascii string = "                                       `sMMMMMMMh:\n.-------..-------- -----------------.`sMMMMMMMd:  \n`sNMMMMMhyMMMMMMMM/hdMMMMMMMMMMMMMMhhMMMMMMMd:    \n  `sNMMMhyMMMMMMMM+MNhhMMMMMMMMMMhhMMMMMMMd:      \n    `sNMhyMMMMMMMM+MMMNhhMMMMMMy-+ooooooo:        \n      `ohyMMMMMMMM+MMMMMNhhMMs.                   \n         `........:MMMMMMMNy-                     \n                  :MMMMMMMMMNo`                   \n                  :MMMMMMMMMMMN:                  \n                  :MMMMMMMMMMd:                   \n                  :MMMMMMMMd:                     \n                  :MMMMMMd:                       \n                  :MMMMdhy                        \n                  :MMdhNMd                        \n                  :dhNMMMd                        \n                 `oNMMMMMd                        \n               `+NMMMMMMMd                        \n             `+NMMMMMMMMMd                        \n            `dMMMMMMMMMMMd                        \n              /mMMMMMMMMMd                        \n                /mMMMMMMMd.                       \n                  /mMMMMMdyd:                     \n                    /mMMMhyMMd:                   \n                      /mMhyMMMMd:                 \n                        /syMMMMMMd/               "
+	// Width of the ASCII art
+	asciiLen int = 50
+	// Menu text
+	tekst string = "Thalia Constitutieborrel Gastenboek\n1) Schrijf een nieuw bericht.\n2) Lees oude berichten."
 )
 
 var (
-	menu      string = ""
-	menuwidth int    = 0
-	Message   string = ""
+	menu      string
+	menuwidth int
+	message   string
 )
 
+// Function that determines the size of the executing terminal
+// WARN: Only works if stty is available (So at least linux)
 func terminalSize() (width, height int) {
 	cmd := exec.Command("stty", "size")
 	cmd.Stdin = os.Stdin
@@ -32,18 +37,20 @@ func terminalSize() (width, height int) {
 	return width, height
 }
 
+// Clears the terminal screen
 func clear() {
 	_, height := terminalSize()
 	fmt.Printf("%v", strings.Repeat("\n", height+1))
 }
 
+// Generates a menu string, takes up the whole screen.
 func generateMenu() string {
 	var width, height int = terminalSize()
 	if menu == "" && width != menuwidth {
 		menuwidth = width
 		if width >= asciiLen+4 {
-			var content []string = strings.Split(ascii, "\n")
-			var options []string = strings.Split(tekst, "\n")
+			var content = strings.Split(ascii, "\n")
+			var options = strings.Split(tekst, "\n")
 
 			content = append(content, make([]string, ((height-4)-len(content)-len(options))/2)...)
 			content = append(content, options...)
@@ -51,7 +58,7 @@ func generateMenu() string {
 			menu += strings.Repeat("-", width-1) + "\n"
 
 			for _, value := range content {
-				var length int = len(value)
+				var length = len(value)
 				menu += "|"
 				menu += strings.Repeat(" ", int(math.Floor(float64((width-length-3)/2.0))))
 				menu += value
@@ -67,11 +74,12 @@ func generateMenu() string {
 	return menu
 }
 
+// Function that keeps the user going!
 func showMenu() {
 	for {
 		clear()
 		fmt.Print(generateMenu())
-		fmt.Println(Message)
+		fmt.Println(message)
 
 		fmt.Print("Maak uw keuze: ")
 		var i int
@@ -79,12 +87,12 @@ func showMenu() {
 
 		switch i {
 		default:
-			Message = "Was dat een keuze? Ik dacht van niet, probeer maar opnieuw!"
+			message = "Was dat een keuze? Ik dacht van niet, probeer maar opnieuw!"
 		case 1:
 			if makeEntry() {
-				Message = ""
+				message = ""
 			} else {
-				Message = "Something went terribly wrong! Wat heb je nou weer gedaan??"
+				message = "Something went terribly wrong! Wat heb je nou weer gedaan??"
 			}
 		case 2:
 			viewEntry()

@@ -16,9 +16,10 @@ const (
 )
 
 var (
-	reader *bufio.Reader = bufio.NewReader(os.Stdin)
+	reader = bufio.NewReader(os.Stdin)
 )
 
+// The function that handles the actual content of the message
 func msgContent() (string, bool) {
 	var msg string
 
@@ -42,9 +43,10 @@ S:
 	return msg, true
 }
 
+// The function that handles the signing of a message
 func msgSign() (string, bool) {
 	var sign string
-	var end int = -1
+	var end = -1
 
 S:
 	for {
@@ -70,6 +72,8 @@ S:
 	return sign, true
 }
 
+// Creates an files with filename in the current directory
+// the content of the file will of course be content.
 func writeToFile(filename, content string) bool {
 	f, err := os.Create(filename)
 	if err != nil {
@@ -91,6 +95,7 @@ func writeToFile(filename, content string) bool {
 	return true
 }
 
+// The coordinating function that calls all the necessary functions
 func makeEntry() bool {
 	clear()
 
