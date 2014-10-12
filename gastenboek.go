@@ -5,6 +5,9 @@ import (
 	"os/signal"
 )
 
+// SUPER SECRET CODE
+const code int = 14101992
+
 // IT'S A TRAP! (This catches all signals so the program can't be interrupted)
 func signalCatcher() {
 	c := make(chan os.Signal)

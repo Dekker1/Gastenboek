@@ -96,7 +96,7 @@ func showMenu() {
 			}
 		case 2:
 			viewEntry()
-		case 14101992:
+		case code:
 			clear()
 			os.Exit(0)
 		}
