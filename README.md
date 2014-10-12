@@ -23,4 +23,4 @@ go install
 ```
 8. Zorg dat je gastenboek overal kan starten door de executables van Go toe te voegen aan PATH: `export PATH=$PATH:$GOPATH/bin`
 9. Sluit de USB-stick aan en ga naar de juiste map met `cd`
-10. Start het gastenboek programma met: `gastenboek`
+10. Start het gastenboek programma met: `Gastenboek`
