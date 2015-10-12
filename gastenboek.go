@@ -12,7 +12,7 @@ const code int = 14101992
 func signalCatcher() {
 	c := make(chan os.Signal)
 	signal.Notify(c)
-	for range c {
+	for _,_ = range c {
 		//fmt.Printf("Signal received: %v", sig)
 	}
 }
