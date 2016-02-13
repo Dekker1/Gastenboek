@@ -15,7 +15,7 @@ mkdir go
 export GOPATH=$HOME/go
 ```
 5. Download de source code: `go get github.com/jjdekker/Gastenboek`
-6. Verander de "Super Secret Code" (Om het programma te beëindigen). Deze is te vinden op regel 9 in `gastenboek.go`.
+6. Verander de "Super Secret Code" (om het programma te beëindigen). Deze is te vinden op regel 9 in `gastenboek.go`.
 7. Compileer de code opnieuw:
 ```bash
 cd $GOPATH/src/github.com/jjdekker/Gastenboek
@@ -23,4 +23,4 @@ go install
 ```
 8. Zorg dat je gastenboek overal kan starten door de executables van Go toe te voegen aan PATH: `export PATH=$PATH:$GOPATH/bin`
 9. Sluit de USB-stick aan en ga naar de juiste map met `cd`
-10. Start het gastenboek programma met: `Gastenboek`
+10. Start het gastenboek programma met: `exec Gastenboek` (Mocht iemand toch een manier vinden om de applicatie te verlaten zorgt `exec` ervoor dat ze niet terugvallen naar de shell)
